@@ -1,0 +1,34 @@
+/* Osnovne nastavitve strani */
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden; /* prepreči premikanje strani */
+}
+
+/* Ozadje strani */
+body {
+  display: grid;
+  place-items: center;
+  background: url("img/maze_bg_full.png") center / cover no-repeat fixed;
+  font-family: Arial, sans-serif;
+}
+
+/* Canvas, kjer rišemo animacijo */
+canvas {
+  display: block;
+  background: transparent; /* omogoča prosojnost PNG slike */
+}
+
+/* Napis na vrhu strani */
+#hint {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: #ffd28a;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  z-index: 10;
+}
