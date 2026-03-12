@@ -1,52 +1,100 @@
-🐉 Dragon Maze Adventure
+# 🐉 Dragon Maze Adventure (HTML · CSS · JavaScript)
 
-Dragon Maze Adventure is a small interactive web game built using HTML, CSS, and JavaScript.
-The player starts the game by clicking on the dragon, which then travels through a labyrinth until it reaches the treasure at the bottom.
+A clean and interactive **front-end maze game** where the player activates a dragon that travels through a labyrinth to reach the treasure.
 
-The project focuses on combining visual design, animation, and user interaction to create an engaging browser experience.
+The project demonstrates how **HTML structure, CSS design and JavaScript logic** can be combined to create a small but engaging browser game.
 
-🎮 What the Project Offers
+---
 
-Interactive game start by clicking the dragon
+## ⚡ Live Gameplay
 
-Visually designed stone labyrinth
+A minimal fullscreen layout with a **cinematic maze environment** and an animated dragon path.
 
-Animated movement through the maze
+✔ Click the dragon to start the game  
+✔ Smooth movement through the labyrinth  
+✔ Clear visual instructions  
+✔ Restart functionality after completion  
 
-Clear instructions for the player
+---
 
-Restart option after finishing the maze
+## 🚀 Features
 
-Clean and simple user interface
+• Interactive dragon start trigger  
+• Detailed stone labyrinth design  
+• Animated path navigation  
+• Treasure goal at the end of the maze  
+• Clean fullscreen layout  
+• Simple and intuitive user interaction  
+• Modular separation of HTML, CSS and JavaScript  
 
-🛠 Technologies Used
+---
 
-The project was built using core web development technologies:
+## 💡 Why This Project Matters
 
-HTML – page structure
-CSS – styling, layout, and visual design
-JavaScript – game logic, animation, and interaction
+This project demonstrates:
 
-🚀 How It Works
+• Practical front-end development skills  
+• DOM manipulation with JavaScript  
+• Event handling for interactive gameplay  
+• Visual layout design with CSS  
+• Creating a simple browser-based game structure  
 
-The webpage loads and displays the maze.
+It can serve as:
 
-A message instructs the player to click the dragon to begin.
+• a **learning project**  
+• a **portfolio example**  
+• a **base for future browser games**  
+• a starting point for **animations and interactions**
 
-After clicking the dragon, the path through the maze is activated.
+---
 
-The dragon follows the path until it reaches the treasure.
+## 🛠 Tech Stack
 
-The game can then be restarted.
+• **HTML5** – page structure and elements  
+• **CSS3** – styling, layout and visual effects  
+• **JavaScript (Vanilla JS)** – game logic and interaction  
 
-🎯 Purpose of the Project
+---
 
-This project was created to practice and demonstrate:
+## 📂 Project Structure
 
-basic front-end development
+dragon-maze-adventure
 
-DOM manipulation with JavaScript
+index.html → main webpage structure  
+style.css → visual styling and layout  
+script.js → game logic and interaction  
 
-interactive elements in a webpage
+images/  
+ maze background  
+ dragon image  
+ treasure image  
 
-combining design and functionality in a simple web game
+README.md → project documentation
+
+---
+
+## 🎮 How It Works
+
+1. The webpage loads and displays the labyrinth.
+2. A message instructs the player to click the dragon.
+3. Clicking the dragon starts the animation.
+4. The dragon travels through the maze path.
+5. When the treasure is reached, the game finishes.
+6. The player can restart the adventure.
+
+---
+
+## 🎯 Project Goal
+
+The goal of this project was to practice:
+
+• front-end architecture  
+• DOM interaction with JavaScript  
+• combining visuals with functionality  
+• creating a small interactive web experience
+
+---
+
+## 👨‍💻 Author
+
+Created as a **web development learning project** using HTML, CSS and JavaScript.
