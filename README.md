@@ -64,10 +64,10 @@ index.html → main webpage structure
 style.css → visual styling and layout  
 script.js → game logic and interaction  
 
-images/  
- maze background  
- dragon image  
- treasure image  
+img/  
+ maze_bg.png  
+ maze_bg_full.png
+   
 
 README.md → project documentation
 
