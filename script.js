@@ -18,7 +18,7 @@ const hint = document.getElementById("hint");
 
 // Naložimo sliko labirinta
 const bg = new Image();
-bg.src = "img/maze_bg.png";
+bg.src = "img/maze_bg_blur.png";
 
 
 // ==============================
@@ -108,7 +108,7 @@ let running = false;
 let progress = 0;
 
 // speed določa hitrost gibanja
-let speed = 0.2;
+let speed = 0.02;
 
 // endFire pove, ali je ogenj že prišel do sena
 let endFire = false;
@@ -248,3 +248,7 @@ bg.onload = function() {
 
   animate();
 };
+
+document.getElementById("aboutBtn").addEventListener("click", function() {
+  alert("Author: Jaka Gorjan\n\nThis Dragon Maze project was created as a learning project using HTML, CSS and JavaScript.");
+});

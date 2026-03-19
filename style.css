@@ -9,7 +9,7 @@ html, body {
 body {
   display: grid;
   place-items: center;
-  background: url("img/maze_bg_full.png") center / cover no-repeat fixed;
+  background: url("img/maze_bg_full_67.png") center / cover no-repeat fixed;
   font-family: Arial, sans-serif;
 }
 
@@ -31,4 +31,18 @@ canvas {
   border-radius: 10px;
   font-weight: bold;
   z-index: 10;
+}
+
+#aboutBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 20;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.7);
+  color: #ffd28a;
+  font-weight: bold;
+  cursor: pointer;
 }
