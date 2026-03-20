@@ -108,7 +108,7 @@ let running = false;
 let progress = 0;
 
 // speed določa hitrost gibanja
-let speed = 0.02;
+let speed = 0.2;
 
 // endFire pove, ali je ogenj že prišel do sena
 let endFire = false;
