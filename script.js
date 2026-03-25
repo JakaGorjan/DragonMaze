@@ -1,42 +1,57 @@
 // ==============================
 // 1. PRIPRAVA CANVAS
 // ==============================
-
-// Poiščemo canvas v HTML dokumentu
 const canvas = document.getElementById("canvas");
-
-// ctx omogoča risanje na canvas
 const ctx = canvas.getContext("2d");
-
-// Poiščemo napis na vrhu strani
 const hint = document.getElementById("hint");
-
 
 // ==============================
 // 2. NALAGANJE SLIKE
 // ==============================
-
-// Naložimo sliko labirinta
 const bg = new Image();
-bg.src = "img/maze_bg_blur.png";
+bg.src = "img/maze_bg_fire.png";
 
+// ==============================
+// 2B. NALAGANJE FIRE FRAME-OV
+// ==============================
+const fireFrames = [];
+
+for (let i = 1; i <= 11; i++) {
+  const img = new Image();
+  img.src = `img/sheet/${i}.png`;
+  fireFrames.push(img);
+}
+
+// ==============================
+// 2C. NALAGANJE BAKEL
+// ==============================
+const torchFire = new Image();
+torchFire.src = "img/torchFire.png";
+
+const torchNoFire = new Image();
+torchNoFire.src = "img/torchNoFire.png";
 
 // ==============================
 // 3. POMEMBNE TOČKE
 // ==============================
-
-// Položaj zmajevih ust
 const dragon = { x: 1240, y: 330 };
-
-// Položaj sena na koncu
 const hay = { x: 1240, y: 2350 };
 
+// ==============================
+// 3B. TOČKE BAKEL
+// ==============================
+const torches = [
+  { x: 1320, y: 650, lit: false },
+  { x: 1705, y: 905, lit: false },
+  { x: 1545, y: 1200, lit: false },
+  { x: 1215, y: 1445, lit: false },
+  { x: 835, y: 1300, lit: false },
+  { x: 610, y: 1500, lit: false }
+];
 
 // ==============================
 // 4. POT OGNJA
 // ==============================
-
-// Seznam točk, po katerih se bo premikal ogenj
 const path = [
   {x:1240,y:330},
   {x:1265,y:408},
@@ -96,119 +111,169 @@ const path = [
   {x:1240,y:2350}
 ];
 
-
 // ==============================
 // 5. SPREMENLJIVKE ZA ANIMACIJO
 // ==============================
-
-// running pove, ali ogenj trenutno teče po poti
 let running = false;
-
-// progress pove, kako daleč po poti je ogenj
 let progress = 0;
-
-// speed določa hitrost gibanja
-let speed = 0.2;
-
-// endFire pove, ali je ogenj že prišel do sena
+let speed = 0.02;
 let endFire = false;
 
+let fireFrame = 0;
+let fireTick = 0;
 
 // ==============================
-// 6. FUNKCIJA ZA RISANJE OGNJA
+// 6. FUNKCIJA ZA RISANJE OGNJA PO POTI
 // ==============================
-
-// Nariše emoji ogenj na določeno mesto
 function drawFlame(x, y, size) {
-  ctx.font = size + 'px serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('🔥', x, y);
+  const img = fireFrames[5];
+
+  ctx.drawImage(
+    img,
+    x - size / 2,
+    y - size / 2,
+    size,
+    size
+  );
 }
 
+// ==============================
+// 6B. FUNKCIJA ZA RISANJE GOREČEGA VOZA
+// ==============================
+function drawBurningCart(x, y) {
+  fireTick++;
+
+  if (fireTick > 85) {
+    fireTick = 0;
+    fireFrame = (fireFrame + 1) % fireFrames.length;
+  }
+
+  const size = 320;
+
+  ctx.drawImage(
+    fireFrames[fireFrame],
+    x - size / 2,
+    y - size / 2,
+    size,
+    size
+  );
+}
+
+// ==============================
+// 6C. RISANJE BAKEL
+// ==============================
+function drawTorch(torch) {
+  const torchWidth = 44;
+  const torchHeight = 160;
+
+  const img = torch.lit ? torchFire : torchNoFire;
+
+  ctx.drawImage(
+    img,
+    torch.x - torchWidth / 2,
+    torch.y - torchHeight + 20,
+    torchWidth,
+    torchHeight
+  );
+}
+
+// ==============================
+// 6D. PRIŽIG BAKEL
+// ==============================
+function lightTorches(fireX, fireY) {
+  for (let torch of torches) {
+    const dx = fireX - torch.x;
+    const dy = fireY - torch.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < 85) {
+      torch.lit = true;
+    }
+  }
+}
 
 // ==============================
 // 7. GLAVNA ANIMACIJA
 // ==============================
-
 function animate() {
-  // Vedno najprej narišemo ozadje
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Narišemo labirint
   ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
-  // Če animacija teče, premikamo ogenj
+  // Narišemo vse bakle
+  for (let torch of torches) {
+    drawTorch(torch);
+  }
+
+  // Če animacija teče
   if (running) {
     progress += speed;
 
     let i = Math.floor(progress);
 
-    // Če še nismo na koncu poti
     if (i < path.length - 1) {
       let p1 = path[i];
       let p2 = path[i + 1];
 
-      // t poskrbi za gladko premikanje med točkama
       let t = progress - i;
 
       let x = p1.x + (p2.x - p1.x) * t;
       let y = p1.y + (p2.y - p1.y) * t;
 
-      drawFlame(x, y, 40);
+      drawFlame(x, y, 90);
+      lightTorches(x, y);
     } else {
-      // Ko ogenj pride do konca, ustavimo gibanje
       running = false;
       endFire = true;
+      hint.style.display = "block";
+      hint.innerText = "Klikni zmaja za ponovni zagon";
     }
   } else {
-    // Če animacija še ne teče in še ni končana,
-    // pokažemo mali ogenj pri zmaju
     if (!endFire) {
-      drawFlame(dragon.x, dragon.y, 40);
+      drawFlame(dragon.x, dragon.y, 90);
     }
   }
 
-  // Ko je ogenj na vozu, narišemo večji ogenj
+  // Ko pride ogenj do voza, se zažene animacija slik
   if (endFire) {
-    // Utripanje velikosti za lepši efekt
-    let bigSize = 90 + Math.sin(Date.now() / 250) * 8;
-    drawFlame(hay.x, hay.y, bigSize);
+    drawBurningCart(hay.x, hay.y - 40);
   }
 
   requestAnimationFrame(animate);
 }
 
-
 // ==============================
 // 8. KLIK NA ZMAJA
 // ==============================
-
-// Ko uporabnik klikne na canvas
 canvas.addEventListener("click", function(e) {
   let rect = canvas.getBoundingClientRect();
 
-  // Preračun položaja klika glede na velikost canvasa
   let x = (e.clientX - rect.left) * (canvas.width / rect.width);
   let y = (e.clientY - rect.top) * (canvas.height / rect.height);
 
-  // Izračun razdalje do zmajevih ust
   let dx = x - dragon.x;
   let dy = y - dragon.y;
   let distance = Math.sqrt(dx * dx + dy * dy);
 
-  // Če kliknemo blizu zmaja, zaženemo ali ponovno zaženemo animacijo
   if (distance < 40) {
     progress = 0;
     running = true;
     endFire = false;
+    fireFrame = 0;
+    fireTick = 0;
+
+    for (let torch of torches) {
+      torch.lit = false;
+    }
+
     hint.style.display = "none";
   }
 });
 
-
 // ==============================
 // 9. ROKICA NAD ZMAJEM
 // ==============================
-
-// Ko premikamo miško, preverimo če je nad zmajem
 canvas.addEventListener("mousemove", function(e) {
   let rect = canvas.getBoundingClientRect();
 
@@ -219,7 +284,6 @@ canvas.addEventListener("mousemove", function(e) {
   let dy = y - dragon.y;
   let distance = Math.sqrt(dx * dx + dy * dy);
 
-  // Če je miška nad zmajem, pokažemo rokico
   if (distance < 40) {
     canvas.style.cursor = "pointer";
   } else {
@@ -227,28 +291,37 @@ canvas.addEventListener("mousemove", function(e) {
   }
 });
 
-
 // ==============================
 // 10. PRILAGODITEV CANVASA
 // ==============================
-
-// Ko se slika naloži, nastavimo pravo velikost
 bg.onload = function() {
   canvas.width = bg.naturalWidth;
   canvas.height = bg.naturalHeight;
 
-  // Slika se prilagodi velikosti zaslona
   let scale = Math.min(
     window.innerWidth / canvas.width,
     window.innerHeight / canvas.height
   );
 
-  canvas.style.width = canvas.width * scale + "px";
-  canvas.style.height = canvas.height * scale + "px";
+  canvas.style.width = canvas.width / 1.2 * scale + "px";
+  canvas.style.height = canvas.height / 1.2 * scale + "px";
 
   animate();
 };
 
-document.getElementById("aboutBtn").addEventListener("click", function() {
-  alert("Author: Jaka Gorjan\n\nThis Dragon Maze project was created as a learning project using HTML, CSS and JavaScript.");
+// ==============================
+// 11. SECRET ABOUT ME
+// ==============================
+document.addEventListener("keydown", function(e) {
+  if (e.key.toLowerCase() === "o") {
+    Swal.fire({
+      title: 'About me',
+      html: `
+        <b>Dragon Maze</b><br><br>
+        Avtor: Jaka Gorjan
+      `,
+      icon: 'info',
+      confirmButtonText: 'Zapri'
+    });
+  }
 });

@@ -2,47 +2,38 @@
 html, body {
   margin: 0;
   height: 100%;
-  overflow: hidden; /* prepreči premikanje strani */
+  overflow: hidden;
 }
 
 /* Ozadje strani */
 body {
   display: grid;
   place-items: center;
-  background: url("img/maze_bg_full_67.png") center / cover no-repeat fixed;
+  background: url("img/maze_bg_full_fire.png") center / cover no-repeat fixed;
   font-family: Arial, sans-serif;
 }
 
-/* Canvas, kjer rišemo animacijo */
+/* Canvas */
 canvas {
   display: block;
-  background: transparent; /* omogoča prosojnost PNG slike */
+  background: transparent;
+  filter: drop-shadow(0 0 18px rgba(255, 130, 40, 0.10));
 }
 
-/* Napis na vrhu strani */
+/* Napis */
 #hint {
   position: fixed;
-  top: 20px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  color: #ffd28a;
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-weight: bold;
-  z-index: 10;
-}
+  transform: translate(-50%, -50%);
 
-#aboutBtn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 20;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 10px;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.6);
   color: #ffd28a;
+  padding: 14px 22px;
+  border-radius: 12px;
   font-weight: bold;
-  cursor: pointer;
+  font-size: 9px;
+  z-index: 10;
+  pointer-events: none;
+  text-align: center;
 }
