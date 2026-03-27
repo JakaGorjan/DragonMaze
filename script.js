@@ -1,19 +1,13 @@
-// ==============================
+
 // 1. PRIPRAVA CANVAS
-// ==============================
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const hint = document.getElementById("hint");
 
-// ==============================
-// 2. NALAGANJE SLIKE
-// ==============================
+// 2. NALAGANJE 
 const bg = new Image();
 bg.src = "img/maze_bg_fire.png";
 
-// ==============================
-// 2B. NALAGANJE FIRE FRAME-OV
-// ==============================
 const fireFrames = [];
 
 for (let i = 1; i <= 11; i++) {
@@ -22,24 +16,17 @@ for (let i = 1; i <= 11; i++) {
   fireFrames.push(img);
 }
 
-// ==============================
-// 2C. NALAGANJE BAKEL
-// ==============================
-const torchFire = new Image();
 torchFire.src = "img/torchFire.png";
 
 const torchNoFire = new Image();
 torchNoFire.src = "img/torchNoFire.png";
 
-// ==============================
+
 // 3. POMEMBNE TOČKE
-// ==============================
 const dragon = { x: 1240, y: 330 };
 const hay = { x: 1240, y: 2350 };
 
-// ==============================
-// 3B. TOČKE BAKEL
-// ==============================
+//  BAKELJE
 const torches = [
   { x: 1320, y: 650, lit: false },
   { x: 1705, y: 905, lit: false },
@@ -49,9 +36,7 @@ const torches = [
   { x: 610, y: 1500, lit: false }
 ];
 
-// ==============================
 // 4. POT OGNJA
-// ==============================
 const path = [
   {x:1240,y:330},
   {x:1265,y:408},
@@ -111,9 +96,9 @@ const path = [
   {x:1240,y:2350}
 ];
 
-// ==============================
+
 // 5. SPREMENLJIVKE ZA ANIMACIJO
-// ==============================
+
 let running = false;
 let progress = 0;
 let speed = 0.02;
@@ -122,9 +107,9 @@ let endFire = false;
 let fireFrame = 0;
 let fireTick = 0;
 
-// ==============================
+
 // 6. FUNKCIJA ZA RISANJE OGNJA PO POTI
-// ==============================
+
 function drawFlame(x, y, size) {
   const img = fireFrames[5];
 
@@ -137,9 +122,8 @@ function drawFlame(x, y, size) {
   );
 }
 
-// ==============================
 // 6B. FUNKCIJA ZA RISANJE GOREČEGA VOZA
-// ==============================
+
 function drawBurningCart(x, y) {
   fireTick++;
 
@@ -159,9 +143,7 @@ function drawBurningCart(x, y) {
   );
 }
 
-// ==============================
 // 6C. RISANJE BAKEL
-// ==============================
 function drawTorch(torch) {
   const torchWidth = 44;
   const torchHeight = 160;
@@ -177,9 +159,8 @@ function drawTorch(torch) {
   );
 }
 
-// ==============================
 // 6D. PRIŽIG BAKEL
-// ==============================
+
 function lightTorches(fireX, fireY) {
   for (let torch of torches) {
     const dx = fireX - torch.x;
@@ -192,9 +173,9 @@ function lightTorches(fireX, fireY) {
   }
 }
 
-// ==============================
+
 // 7. GLAVNA ANIMACIJA
-// ==============================
+
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -243,9 +224,9 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-// ==============================
+
 // 8. KLIK NA ZMAJA
-// ==============================
+
 canvas.addEventListener("click", function(e) {
   let rect = canvas.getBoundingClientRect();
 
@@ -271,9 +252,9 @@ canvas.addEventListener("click", function(e) {
   }
 });
 
-// ==============================
+
 // 9. ROKICA NAD ZMAJEM
-// ==============================
+
 canvas.addEventListener("mousemove", function(e) {
   let rect = canvas.getBoundingClientRect();
 
@@ -291,9 +272,9 @@ canvas.addEventListener("mousemove", function(e) {
   }
 });
 
-// ==============================
+
 // 10. PRILAGODITEV CANVASA
-// ==============================
+
 bg.onload = function() {
   canvas.width = bg.naturalWidth;
   canvas.height = bg.naturalHeight;
@@ -309,9 +290,9 @@ bg.onload = function() {
   animate();
 };
 
-// ==============================
+
 // 11. SECRET ABOUT ME
-// ==============================
+
 document.addEventListener("keydown", function(e) {
   if (e.key.toLowerCase() === "o") {
     Swal.fire({
