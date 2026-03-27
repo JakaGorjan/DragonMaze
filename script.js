@@ -15,7 +15,7 @@ for (let i = 1; i <= 11; i++) {
   img.src = `img/sheet/${i}.png`;
   fireFrames.push(img);
 }
-
+const torchFire = new Image();
 torchFire.src = "img/torchFire.png";
 
 const torchNoFire = new Image();
